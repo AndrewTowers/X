@@ -6,7 +6,7 @@ int match_space(FILE *f)
 {
 	int	c;
 
-	while ((c = fgetc(f)) != EOF))
+	while ((c = fgetc(f)) != EOF)
 	{
 		if (!isspace(c))
 		{
@@ -23,10 +23,10 @@ int match_char(FILE *f, char c)
 {
     int	ch = fgetc(f);
 	if (ch == EOF)
-		return (-1)
+		return (-1);
 	if (ch != c)
 	{
-		unget(ch, f);
+		ungetc(ch, f);
 		return 0;
 	}
     return (1);
@@ -38,13 +38,13 @@ int scan_char(FILE *f, va_list ap)
 	if (c == EOF)
 		return (0);
 	char	*ptr = va_arg(ap, char *);
-	*ptr = char(c);
+	*ptr = (char)c;
     return (1);
 }
 
 int scan_int(FILE *f, va_list ap)
 {
-    int	n, neg = 0;
+    int	c, neg = 0;
 	int	num = 0;
 	int	read = 0;
 
@@ -54,17 +54,17 @@ int scan_int(FILE *f, va_list ap)
 		return (0);
 	if (c == '-' || c == '+')
 	{
-		neg = (c == '-')
+		neg = (c == '-');
 		c = fgetc(f);
 	}
-	while (c != EOF && isdiget(c))
+	while (c != EOF && isdigit(c))
 	{
 		num = num * 10 + (c - '0');
 		read = 1;
-		c = fgetc(c);
+		c = fgetc(f);
 	}
 	if (c != EOF)
-		unget(c, f);
+		ungetc(c, f);
 	if (!read)
 		return (0);
 	if (neg)
