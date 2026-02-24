@@ -4,31 +4,98 @@
 
 int match_space(FILE *f)
 {
-        // You may insert code here
-    return (0);
+	int	c;
+
+	while ((c = fgetc(f)) != EOF))
+	{
+		if (!isspace(c))
+		{
+			ungetc(c, f);
+			break ;
+		}
+	}
+	if (ferror(f))
+			return (-1);
+    return (1);
 }
 
 int match_char(FILE *f, char c)
 {
-        // You may insert code here
-    return (0);
+    int	ch = fgetc(f);
+	if (ch == EOF)
+		return (-1)
+	if (ch != c)
+	{
+		unget(ch, f);
+		return 0;
+	}
+    return (1);
 }
 
 int scan_char(FILE *f, va_list ap)
 {
-        // You may insert code here
-    return (0);
+    int c = fgetc(f);
+	if (c == EOF)
+		return (0);
+	char	*ptr = va_arg(ap, char *);
+	*ptr = char(c);
+    return (1);
 }
 
 int scan_int(FILE *f, va_list ap)
 {
-        // You may insert code here
-    return (0);
+    int	n, neg = 0;
+	int	num = 0;
+	int	read = 0;
+
+	while ((c = fgetc(f)) != EOF && !isspace(c))
+		;
+	if (c == EOF)
+		return (0);
+	if (c == '-' || c == '+')
+	{
+		neg = (c == '-')
+		c = fgetc(f);
+	}
+	while (c != EOF && isdiget(c))
+	{
+		num = num * 10 + (c - '0');
+		read = 1;
+		c = fgetc(c);
+	}
+	if (c != EOF)
+		unget(c, f);
+	if (!read)
+		return (0);
+	if (neg)
+		num = -num;
+	int	*ptr = va_arg(ap, int *);
+	*ptr = num;
+    return (1);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-        // You may insert code here
+    char *str = va_arg(ap, char *);
+    int c, read = 0;
+
+    // Skip initial spaces
+    while ((c = fgetc(f)) != EOF && isspace(c))
+        ;
+    if (c == EOF)
+        return 0;
+    do
+    {
+        if (isspace(c) || c == EOF)
+        {
+            ungetc(c, f);
+            break;
+        }
+        str[read++] = (char)c;
+        c = fgetc(f);
+    } while (c != EOF);
+    str[read] = '\0';
+    return read > 0 ? 1 : 0;
     return (0);
 }
 
