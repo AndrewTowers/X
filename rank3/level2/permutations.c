@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void swap(char *a, char*b)
+void ft_swap(char *a, char*b)
 {
     char tmp = *a;
     *a = *b;

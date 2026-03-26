@@ -3,12 +3,11 @@
 
 static void	print_subset(int *subset, int subset_size)
 {
-	for (i = 0; i < subset_size, i++)
+	for (int i = 0; i < subset_size; i++)
 	{
 		if (i > 0)
 			printf(" ");
 		printf("%d", subset[i]);
-		i++;
 	}
 	printf("\n");
 }
